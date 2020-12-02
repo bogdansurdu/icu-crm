@@ -1,0 +1,5 @@
+Flask>=1,<2
+requests>=2,<3
+msal>=0,<2
+gunicorn
+requests_oauthlib

@@ -1,0 +1,11 @@
+<body>
+<h1>Welcome to the comment section</h1>
+
+<h3>Here is the ticket you are currently viewing: {{ ticket }}</h3>
+
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment }}</li>
+    {% endfor %}
+</ul>
+</body>

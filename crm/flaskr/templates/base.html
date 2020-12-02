@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% block links %}{% endblock %}
+<body>
+  <nav>
+    <ul>
+      {% if 'user' in session %}
+        <li><a {% if active == 'home' %}class="active"{% endif %} href="{{ url_for('ad.index') }}">Home</a></li>
+        <li><a {% if active == 'submit' %}class="active"{% endif %} href="{{ url_for('tickets.submit') }}">Submit a Request</a>
+        <li><a {% if active == 'my_tickets' %}class="active"{% endif %} href="{{ url_for('tickets.personal') }}">My Tickets</a></li>
+        <li><a {% if active == 'conv' %}class="active"{% endif %} href="{{ url_for('conv.data') }}">Chat to our Staff</a>
+        <li><a {% if active == 'tickets' %}class="active"{% endif %} href="{{ url_for('tickets.data') }}">Staff Portal</a></li>
+        <li><a>User: <span>{{ session.get('user') }}</span></a></li>
+        <li><a href="{{ url_for('ad.logout') }}">Log Out</a>
+      {% else %}
+        <li><a href="{{_build_auth_url(authority=config['B2C_RESET_PASSWORD_AUTHORITY'])}}">Log In</a>
+      {% endif %}
+    </ul>
+  </nav>
+  <br>
+  <section class="content">
+    {% block content %}{% endblock %}
+  </section>
+</body>
+</html>

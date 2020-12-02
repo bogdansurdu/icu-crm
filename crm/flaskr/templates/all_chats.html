@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block links %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block title %}Chat to Our Staff{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div>
+        <form method="POST">
+            <input type="submit" value="Ask for Help">
+        </form>
+    </div>
+    <div id="chat_section">
+
+        <div id = "convos"></div>
+        <div id = "open_chats"></div>
+    </div>
+
+
+    <script>
+        
+        var URL = location.href + "data";
+
+        setInterval(
+                    function()
+                    {
+                        
+                        $.ajax({
+                            url: URL,
+                            dataType: 'json',
+                            success: function( data ) {
+                                var conv = document.getElementById("convos")
+                                while(conv.firstChild){
+                                    conv.removeChild(conv.lastChild);
+                                }
+
+                                data.forEach(element => {
+                                    var btn = document.createElement("button");
+                                    btn.classList.add("chat_button");
+                                    if(element.seen == 1)
+                                        btn.classList.add("new_button");
+                                    else
+                                        btn.classList.add("no_new_button");
+                                    btn.innerHTML = element.name;
+                                    btn.onclick = function(){
+
+                                        var div = document.createElement("div");
+                                        div.classList.add("chat_width");
+                                        div.classList.add("inlineable");
+                                        document.getElementById("open_chats").appendChild(div);
+
+                                        var name_tag = document.createElement("div");
+                                        name_tag.classList.add("rectangle");
+                                        name_tag.classList.add("chat_width");
+                                        name_tag.innerHTML = element.name;
+                                        div.appendChild(name_tag);
+
+                                        
+                                        var close_button = document.createElement("button");
+                                        close_button.innerText = "X";
+                                        close_button.classList.add("close_button")
+                                        close_button.onclick = function(){
+                                            this.parentNode.parentNode.remove();
+                                        }
+                                        name_tag.appendChild(close_button);
+
+
+                                        var iframe = document.createElement("iframe");
+                                        iframe.classList.add("chat_width");
+                                        var size = location.href.lastIndexOf("/");
+                                        iframe.src = location.href.substring(0, size);
+                                        size = iframe.src.lastIndexOf("/");
+                                        
+
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: location.href + "conv_id_for",
+                                            data: JSON.stringify({
+                                                name1: "{{ session.get('user') }}",
+                                                name2: element.name
+                                            }),
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: 'json',
+                                            success: function(resultData) { 
+                                                iframe.src = iframe.src.substring(0, size + 1) + "chat/" + resultData.result;
+                                            }
+                                        });
+                                        div.appendChild(iframe);
+
+
+                                    }
+                                    conv.appendChild(btn);
+
+                                    var brake = document.createElement("br");
+                                    conv.appendChild(brake);
+
+                                });
+                            },
+                            error: function( data ) {
+                                
+                            }
+                        });
+                        
+                    },
+                    1000);
+    </script>
+
+{% endblock %}

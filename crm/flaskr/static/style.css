@@ -1,0 +1,190 @@
+html {
+    /*background-color: #30799B;*/
+    padding: 2% 5%;
+}
+body {
+    font-family: Roboto;
+    border-color: black;
+    border-radius: 5px;
+    border-style: solid;
+    overflow: auto;
+    height: 600px;
+    width: 100%;
+    padding: 10px;
+    align-content: center;
+    /*background-color: #cccccc;*/
+}
+
+nav {
+    /*background-color: cadetblue;*/
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: left;
+}
+
+li a:hover {
+    background-color: darkgrey;
+}
+
+li a.active {
+    background-color: #30799B;
+    color: #dddddd;
+}
+
+li a.active:hover {
+    background-color: #11557C;
+}
+
+li a {
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+form {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    align-self: center;
+}
+
+th {
+    background-color: #30799B;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+tr {
+    padding: 5px;
+}
+
+tr:hover {
+    background-color: #bbbbbb;
+}
+
+td {
+    border-left: 2px solid black;
+}
+
+input, select {
+    align-self: center;
+    display: block;
+    font-size:11px;
+    padding:4px 2px;
+    border:solid 1px #30799B;
+    margin:10px 0 20px 5%;
+    width: 35%
+}
+
+input[type=time] {
+    width: 80px;
+}
+
+label {
+    margin-left: 7%;
+}
+
+textarea {
+    height: 100px;
+    width: 80%;
+    align-self: center;
+    display: block;
+    font-size:11px;
+    padding:4px 2px;
+    border:solid 1px #30799B;
+    margin:10px 0 20px 5%;
+}
+
+li.comment {
+    display: block;
+}
+
+div {
+    display: block;
+}
+
+.topleft {
+    position: relative;
+    top: 0px;
+
+}
+
+div.response h4, div.response p {
+    border: thin solid black;
+    border-radius: 3px;
+}
+
+.chat_width {
+    width: 30vw;
+}
+
+.rectangle {
+    border: 2px solid black;
+    height: 3vh;
+    background-color: bisque;
+    text-align: center;
+}
+
+.close_button {
+    position: relative;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.chat_button {
+    width: 10vw;
+}
+
+.no_new_button {
+    color: gray;
+}
+
+.new_button {
+    color: blue;
+}
+
+#chat_section {
+    padding-top: 1vh;
+    width: 90vw;
+}
+
+#convos {
+    min-height: 60vh;
+    max-height: 60vh;
+    position: absolute;
+    right: 3vw;
+    top: 22vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#open_chats {
+    width: 78vw;
+    overflow-y: scroll;
+    min-height: 60vh;
+    max-height: 60vh;
+    display: inline-block;
+}
+
+.inlineable {
+    display: inline-block;
+}

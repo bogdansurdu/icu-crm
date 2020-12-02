@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}Ask ICU{% endblock %}{% endblock %}</h1>
+    <h2>Welcome to the ICU service portal {{ user }}!</h2>
+
+    {% if config.get("ENDPOINT") %}
+      <li><a href='/graphcall'>Call Microsoft Graph API</a></li>
+    {% endif %}
+
+    {% if config.get("B2C_PROFILE_AUTHORITY") %}
+      <li><a href='{{_build_auth_url(authority=config["B2C_PROFILE_AUTHORITY"])}}'>Edit Profile</a></li>
+    {% endif %}
+
+
+    <div class="topleft" style="float: left; width: 49%; border: thin solid black; padding-bottom: 10px; padding-left: 10px;">
+        <h4>What can you do here?</h4>
+        <p>The Ask ICU platform is here to make your communication with the union simpler and more efficient. Here you can: </p>
+        <ul style="margin-left: 10px">
+            <li><a href="{{ url_for('conv.data') }}">Chat to our staff for speedy help</a></li>
+            <br><br>
+            <li><a href="{{ url_for('tickets.submit') }}">Submit a request</a></li>
+            <br><br>
+            <li><a href="{{ url_for('tickets.personal') }}">View your previous submissions</a></li>
+        </ul>
+    </div>
+{% endblock %}
+

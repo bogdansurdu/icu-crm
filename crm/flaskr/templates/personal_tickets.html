@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}My Tickets{% endblock %}{% endblock %}</h1>
+    <div>
+        <h3 style="display: inline; margin-right: 20px">Open Tickets: {{ open }}</h3>
+        <h3 style="display: inline; margin-right: 20px">Closed Tickets: {{ closed }}</h3>
+        <h3 style="display: inline">Total Submitted: {{ open+closed }}</h3>
+        <p><h3>Filter by:</h3>
+            <a style="margin-left: 10px">Ticket Status:</a>
+                <a href="{{ url_for('tickets.personal') }}?filter=closed{% if order %}&order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}" style="margin-left: 10px">Closed</a> |
+                <a href="{{ url_for('tickets.personal') }}?filter=open{% if order %}&order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">Open</a> |
+                <a href="{{ url_for('tickets.personal') }}{% if order %}?order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">All</a>
+            <br>
+            <a style="margin-left: 10px">Order by:</a>
+                <a href="{{ url_for('tickets.personal') }}?order=new{% if filter %}&filter={{ filter }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}" style="margin-left: 10px">Newest First</a> |
+                <a href="{{ url_for('tickets.personal') }}?order=old{% if filter %}&filter={{ filter }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">Oldest First</a>
+        </p>
+    </div>
+    <div>
+        {% if tickets|length == 0 %}
+            <h3>No tickets found, click <a href="{{ url_for('tickets.submit') }}">here</a> to submit one</h3>
+        {% else %}
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Ticket Author</th>
+                    <th>CSP/Group</th>
+                    <th>Description</th>
+                    <th>Time Open</th>
+                    <th></th>
+                </tr>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td><h4>{{ ticket[8] }}</h4></td>
+                            <td><h4>{{ ticket[2] }}</h4></td>
+                            <td><h4>{{ ticket[4] }}</h4></td>
+                            <td><h4>{{ ticket[9][:50] }}</h4></td>
+                            <td><h4>{{ ticket[6] }}</h4></td>
+                            <td><a href="{{ url_for('tickets.base_ticket', id=ticket[0]) }}">View ticket</a></td>
+                        </tr>
+                    {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+    <hr>
+{% endblock %}
+

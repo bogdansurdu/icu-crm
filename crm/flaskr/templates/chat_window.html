@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<title>Document</title>
+<body onload="set_conv_id()">
+    <p id="chat_log"></p>
+    <form method="POST">
+        
+        <input type = 'hidden' name="conv_id" id="conv_id">
+        <input autocomplete="off" name="msg" id="msg" placeholder="Enter your message here" required>
+        <input type = 'hidden' name="sender" id="sender" value = "{{ user }}">
+
+        <input type="submit" value=">">
+    </form>
+
+    <div id="bottom"></div>
+
+
+    <script>
+
+        function set_conv_id(){
+            document.getElementById("conv_id").value = {{ id }};
+        }
+
+
+        var first_load = 1;
+
+        setInterval(
+                    function()
+                    {
+                        
+                        $.ajax({
+                            url: location.href + "/data",
+                            dataType: 'json',
+                            success: function( data ) {
+                                document.getElementById("chat_log").innerHTML = data;
+                                if(first_load == 1) {
+                                    first_load = 0;
+                                    document.getElementById("bottom").scrollIntoView();
+                                }
+                            },
+                            complete: function( data ) {
+                                
+                            }
+                        });
+                        
+                    },
+                    1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}{{ ticket[8] }}{% endblock %}{% endblock %}</h1>
+    <h5><a href="{{ url_for('tickets.data') }}">Back to all tickets</a></h5>
+    <h3>Overview of ticket #{{ ticket[0] }}{{ ', ' + ticket[8] }}</h3>
+    <hr>
+    <div style="position: relative">
+    <div class="topleft" style="float: left; width: 49%">
+        <table>
+            <tr>
+                <th>Subject</th>
+                <td>{{ ticket[8] }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ ticket[9] }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ ticket[2] }}</td>
+            </tr>
+            <tr>
+                <th>Author Email</th>
+                <td>{{ ticket[3] }}</td>
+            </tr>
+            <tr>
+                <th>Author Group</th>
+                <td>{{ ticket[4] }}</td>
+            </tr>
+            <tr>
+                <th>Claim/Booking No. (if applicable)</th>
+                <td>{{ ticket[5] }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ ticket[6] }}</td>
+            </tr>
+        </table>
+        {% if ticket[10] != 'N/A' %}
+            <div class="response">
+                <h4>Response from: {{ ticket[11]}}</h4>
+                <p>{{ ticket[10] }}<br><a style="font-size: 12px">From {{ ticket[13] }}</a></p>
+            </div>
+        {% else %}
+            <form id="response" method="post">
+                <input type="hidden" name="action" value="response">
+                <textarea type=text style="height: 50px" name="message" placeholder="Enter your response here" required></textarea>
+                <label for="date">(optional) Allow student to create meeting on:</label>
+                <input type="date" name="date" id="date">
+                <input type="submit" value="Send Response">
+            </form>
+        {% endif %}
+    </div>
+    <div style="display: inline-block; width: 49%; margin-left: 15px;">
+        <h4>Staff Comments: </h4>
+        <ul>
+            {% for comment in comments %}
+            <div>
+                <li class="comment"><a>{{ comment[5] }}: {{ comment[2] }} said "{{ comment[4] }}"</a></li>
+            </div>
+            <br>
+            <br>
+            {% endfor %}
+        </ul>
+        <div>
+            <form style="margin-top: 15px" id="comment" method="post">
+                <input type="hidden" name="action" value="comment">
+                <input style="width: 80%" type=text name="message" placeholder="Add a comment...">
+                <input type="submit" value="Post comment">
+            </form>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}
+

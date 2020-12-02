@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}{{ ticket[8] }}{% endblock %}{% endblock %}</h1>
+    <h5><a href="{{ url_for('tickets.personal') }}">Back to my tickets</a></h5>
+    <h3>Overview of ticket #{{ ticket[0] }}{{ ', ' + ticket[8] }}</h3>
+    <div class="topleft" style="float: left; width: 49%">
+        <table>
+            <tr>
+                <th>Subject</th>
+                <td>{{ ticket[8] }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ ticket[9] }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ ticket[2] }}</td>
+            </tr>
+            <tr>
+                <th>Author Email</th>
+                <td>{{ ticket[3] }}</td>
+            </tr>
+            <tr>
+                <th>Author Group</th>
+                <td>{{ ticket[4] }}</td>
+            </tr>
+            <tr>
+                <th>Claim/Booking No. (if applicable)</th>
+                <td>{{ ticket[5] }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ ticket[6] }}</td>
+            </tr>
+        </table>
+        {% if ticket[10] != 'N/A' %}
+            <div class="response">
+                <h4>Response from: {{ ticket[11] }}</h4>
+                <p>{{ ticket[10] }}<br>
+                <br>
+                {% if ticket[14] != 'N/A' %}
+                    {% if 'set' in ticket[14] %}
+                        You've already got a meeting booked for {{ ticket[14][4:] }}
+                    {% else %}
+                        {{ ticket[11] }} has suggested a meeting on {{ ticket[14] }}, click
+                        <a href="{{ url_for('calendar.availability')+'?user='+ticket[12]+'&start='+ticket[14]+'&id='+ticket[0]|string}}">here</a>
+                        to view their calendar and pick a meeting time
+                    {% endif %}
+                {% endif %}
+                <br>
+                <a style="width: 100%; border: thin solid black; font-size: 12px">From {{ ticket[13] }}</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

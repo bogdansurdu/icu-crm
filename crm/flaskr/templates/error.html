@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}Error {{ code }}{% endblock %}{% endblock %} occurred</h1>
+    {% if msg %}
+    <h2>Error message: {{ msg }}</h2>
+    {% endif %}
+
+    <a href="{{ url_for('ad.index') }}">Back to Home</a>
+
+
+    <hr>
+{% endblock %}
+

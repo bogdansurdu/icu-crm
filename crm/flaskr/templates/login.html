@@ -1,0 +1,9 @@
+<!doctype html>
+<html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<body>
+    <p>Welcome to the Imperial College Union ASK service</p>
+    <a href='{{ auth_url }}'>Login</a>
+</body>
+</html>

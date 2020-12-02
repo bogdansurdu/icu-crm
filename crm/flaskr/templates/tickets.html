@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}Ticket Overview{% endblock %}{% endblock %}</h1>
+    <div>
+        <h3 style="display: inline; margin-right: 20px">Open Tickets: {{ open }}</h3>
+        <h3 style="display: inline; margin-right: 20px">Closed Tickets: {{ closed }}</h3>
+        <h3 style="display: inline; margin-right: 20px">Total Submitted: {{ open+closed }}</h3>
+        <h3 style="display: inline">Average Response Time: {{ avg }}</h3>
+
+        <p><h3>Filter by:</h3>
+            <form method="post">
+                <input type="hidden" value="{{ order }}" name="order">
+                <input type="hidden" value="{{ filter }}" name="filter">
+
+                <label style="margin-left: 10px" for="department">Department: </label>
+                <select style="margin-left: 10px" name="department" id="department">
+                    <option>All</option>
+                    <option {% if dept==0 %}select="selected"{% endif %}>Commercial Services</option>
+                    <option {% if dept==1 %}select="selected"{% endif %}>Membership Services</option>
+                    <option {% if dept==2 %}select="selected"{% endif %}>Student Representation</option>
+                    <option {% if dept==3 %}select="selected"{% endif %}>Marketing</option>
+                    <option {% if dept==4 %}select="selected"{% endif %}>Opportunities & Development</option>
+                </select>
+                <input style="margin-left: 10px" type="submit" value="Apply">
+            </form>
+            <h3>Sort by: </h3>
+            <a style="margin-left: 10px">Ticket Status:</a>
+                <a href="{{ url_for('tickets.data') }}?filter=closed{% if order %}&order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}" style="margin-left: 10px">Closed</a> |
+                <a href="{{ url_for('tickets.data') }}?filter=open{% if order %}&order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">Open</a> |
+                <a href="{{ url_for('tickets.data') }}{% if order %}?order={{ order }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">All</a>
+            <br>
+            <a style="margin-left: 10px">Order by:</a>
+                <a href="{{ url_for('tickets.data') }}?order=new{% if filter %}&filter={{ filter }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}" style="margin-left: 10px">Newest First</a> |
+                <a href="{{ url_for('tickets.data') }}?order=old{% if filter %}&filter={{ filter }}{% endif %}{% if dept %}&dept={{ dept }}{% endif %}">Oldest First</a>
+            <br>
+        </p>
+    </div>
+    <div>
+        {% if tickets|length == 0 %}
+            <h3>No tickets found</h3>
+        {% else %}
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Department</th>
+                    <th>Ticket Author</th>
+                    <th>CSP/Group</th>
+                    <th>Description</th>
+                    <th>Time Open</th>
+                    <th></th>
+                </tr>
+                {% for ticket in tickets %}
+                    <tr>
+                        <td><h4>{{ ticket[8] }}</h4></td>
+                        <td><h4>{{ ticket[1] }}</h4></td>
+                        <td><h4>{{ ticket[2] }}</h4></td>
+                        <td><h4>{{ ticket[4] }}</h4></td>
+                        <td><h4>{{ ticket[9][:50] }}</h4></td>
+                        <td><h4>{{ ticket[6] }}</h4></td>
+                        <td><a href="{{ url_for('tickets.ticket', id=ticket[0]) }}">View ticket</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+    <hr>
+{% endblock %}
+

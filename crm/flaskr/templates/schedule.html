@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}Now viewing schedule for {% block title %}{{ name }}{% endblock %}between {{ start }} and {{ end }}{% endblock %}</h1>
+
+    <table>
+        <tr>
+            <th>Availability</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+        {% for event in schedule %}
+        <tr>
+            <td>{{ event[0] }}</td>
+            <td>{{ event[1] }}</td>
+            <td>{{ event[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="form">
+        <form method="post">
+            <label for="title">Meeting title*</label>
+            <input name="title" id="title">
+            <label for="start">Start time*</label>
+            <input type="time" name="start" id="start" required>
+            <label for="end">End time*</label>
+            <input type="time" name="end" id="end" required>
+            <label for="description">Meeting description (optional)</label>
+            <input name="description" id="description">
+            <input type="hidden" name="day" value="{{ day }}" hidden>
+            <input type="hidden" name="user" value="{{ name }}" hidden>
+            <input type="submit" value="Propose meeting">
+        </form>
+    </div>
+    <hr>
+{% endblock %}

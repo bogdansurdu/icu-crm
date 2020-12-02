@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block header %}{% block title %}Submit a Ticket{% endblock %}{% endblock %}</h1>
+
+    <div class="form">
+        <form method="post">
+            <label for="department">What's this about?</label>
+            <select name="department" id="department">
+                <option>Bars</option>
+                <option>Shop</option>
+                <option>Club budgets</option>
+                <option>Clubs and Societies</option>
+                <option>Projects</option>
+                <option>Academic representation</option>
+                <option>Wellbeing representation</option>
+                <option>Social Media</option>
+                <option>Takeovers</option>
+                <option>Emerging Leaders</option>
+                <option selected="selected">Other</option>
+            </select>
+            <label for="group">Group (CSP the request is for)</label>
+            <input name="group" id="group">
+            <label for="claim">Claim/Booking No.</label>
+            <input name="claim" id="claim">
+            <label for="title">Ticket Summary (50 characters max)</label>
+            <input name="title" id="title" required>
+            <label for="body">Request description</label>
+            <textarea name="body" id="body"></textarea>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <hr>
+{% endblock %}
